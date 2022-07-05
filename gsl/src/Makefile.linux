@@ -1,0 +1,31 @@
+DEST = .
+CC = gcc
+CFLAGS = $(INCLUDE) $(LIB) 
+
+JNI_BLAS_SRC = jni_blas
+
+INCLUDE = -I../../include -I/usr/include/gsl
+
+LIB = -L/usr/local/lib #-L/usr/local/lib64 -L/usr/lib 
+
+C_SRC_BLAS = $(JNI_BLAS_SRC)/c/Matrix.c
+DYLIB_BLAS = ../lib/libgsl_blas.so
+
+JC = javac
+JFLAGS = -d
+JAVA_SRC = $(JNI_BLAS_SRC)/java/Matrix.java 
+PACKAGE = ../class/JGSL
+
+all: $(PACKAGE) $(DYLIB_BLAS)
+
+$(PACKAGE): $(JAVA_SRC)
+	@mkdir -p $(@D)
+	$(JC) $(JFLAGS) ../class $(JAVA_SRC)
+	
+$(DYLIB_BLAS): $(C_SRC_BLAS) 
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_BLAS) -lgsl -lgslcblas -lm -o $(DYLIB_BLAS)
+
+clean: 
+	rm -fr ../class
+	rm -fr ../lib

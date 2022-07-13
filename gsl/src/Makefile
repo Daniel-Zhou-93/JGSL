@@ -2,7 +2,7 @@ DEST = .
 CC = gcc
 CFLAGS = $(INCLUDE) $(LIB) 
 
-JNI_BLAS_SRC = jni_blas
+JNI_BLAS_SRC = .
 
 INCLUDE = -I../../include -I/usr/include/gsl
 

@@ -12,8 +12,10 @@ QR_CLASS = JGSLExamplesQR.class
 QR_RUN = JGSL_examples_QR_result.txt
 SVD_CLASS = JGSLExamplesSVD.class
 SVD_RUN = JGSL_examples_SVD_result.txt
+RNG_CLASS = GslRngtest.class
+RNG_RUN = GslRng_examples_result.txt
 
-all: $(EXAMPLE_CLASS) $(EXAMPLE_RUN) $(LU_CLASS) $(LU_RUN) $(CHOL_CLASS) $(CHOL_RUN) $(EIG_CLASS) $(EIG_RUN) $(QR_CLASS) $(QR_RUN) $(SVD_CLASS) $(SVD_RUN)
+all: $(EXAMPLE_CLASS) $(EXAMPLE_RUN) $(LU_CLASS) $(LU_RUN) $(CHOL_CLASS) $(CHOL_RUN) $(EIG_CLASS) $(EIG_RUN) $(QR_CLASS) $(QR_RUN) $(SVD_CLASS) $(SVD_RUN) $(RNG_CLASS) $(RNG_RUN)
 
 $(EXAMPLE_CLASS):
 	javac -classpath $(JAVA_HOME)/class:. JGSLExamples.java 
@@ -50,6 +52,12 @@ $(SVD_CLASS):
 
 $(SVD_RUN):
 	java -Djava.library.path=$(JAVA_HOME)/lib -classpath $(JAVA_HOME)/class:. JGSLExamplesSVD > JGSL_examples_SVD_result.txt
+
+$(RNG_CLASS):
+	javac -classpath $(JAVA_HOME)/class:. GslRngtest.java
+
+$(RNG_RUN):
+	java -Djava.library.path=$(JAVA_HOME)/lib -classpath $(JAVA_HOME)/class:. GslRngtest > GslRng_examples_result.txt
 
 clean: 
 	rm -f *.txt *.class *.out *.serial

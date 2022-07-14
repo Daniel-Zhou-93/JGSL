@@ -14,12 +14,14 @@ C_SRC_CHOL = $(JNI_BLAS_SRC)/c/CholeskyDecomposition.c
 C_SRC_EIG = $(JNI_BLAS_SRC)/c/EigenvalueDecomposition.c
 C_SRC_QR = $(JNI_BLAS_SRC)/c/QRDecomposition.c
 C_SRC_SVD = $(JNI_BLAS_SRC)/c/SingularValueDecomposition.c
+C_SRC_RNG = $(JNI_BLAS_SRC)/c/JniGslRng.c
 OBJ_BLAS = ../lib/libgsl_blas.so
 OBJ_LU = ../lib/libgsl_lu.so
 OBJ_CHOL = ../lib/libgsl_chol.so
 OBJ_EIG = ../lib/libgsl_eig.so
 OBJ_QR = ../lib/libgsl_qr.so
 OBJ_SVD = ../lib/libgsl_svd.so
+OBJ_RNG = ../lib/libgsl_random.so
 
 JC = javac
 JFLAGS = -d
@@ -56,6 +58,10 @@ $(OBJ_QR): $(C_SRC_QR)
 $(OBJ_SVD): $(C_SRC_SVD) 
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_SVD) -lgsl -lgslcblas -lm -o $(OBJ_SVD)
+
+$(OBJ_RNG): $(C_SRC_RNG)
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_RNG) -lgsl -lgslcblas -lm -o $(OBJ_RNG)
 
 clean: 
 	rm -fr ../class

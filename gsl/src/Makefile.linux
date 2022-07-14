@@ -2,29 +2,66 @@ DEST = .
 CC = gcc
 CFLAGS = $(INCLUDE) $(LIB) 
 
-JNI_BLAS_SRC = jni_blas
+JNI_BLAS_SRC = .
 
 INCLUDE = -I../../include -I/usr/include/gsl
 
 LIB = -L/usr/local/lib #-L/usr/local/lib64 -L/usr/lib 
 
 C_SRC_BLAS = $(JNI_BLAS_SRC)/c/Matrix.c
-DYLIB_BLAS = ../lib/libgsl_blas.so
+C_SRC_LU = $(JNI_BLAS_SRC)/c/LUDecomposition.c
+C_SRC_CHOL = $(JNI_BLAS_SRC)/c/CholeskyDecomposition.c
+C_SRC_EIG = $(JNI_BLAS_SRC)/c/EigenvalueDecomposition.c
+C_SRC_QR = $(JNI_BLAS_SRC)/c/QRDecomposition.c
+C_SRC_SVD = $(JNI_BLAS_SRC)/c/SingularValueDecomposition.c
+C_SRC_RNG = $(JNI_BLAS_SRC)/c/JniGslRng.c
+OBJ_BLAS = ../lib/libgsl_blas.so
+OBJ_LU = ../lib/libgsl_lu.so
+OBJ_CHOL = ../lib/libgsl_chol.so
+OBJ_EIG = ../lib/libgsl_eig.so
+OBJ_QR = ../lib/libgsl_qr.so
+OBJ_SVD = ../lib/libgsl_svd.so
+OBJ_RNG = ../lib/libgsl_random.so
 
 JC = javac
 JFLAGS = -d
-JAVA_SRC = $(JNI_BLAS_SRC)/java/Matrix.java 
+#TODO: update with other package specifications. Don't forget to rename the files in the java to point to the new OBJ specifications
+JAVA_SRC = $(JNI_BLAS_SRC)/java/Matrix.java $(JNI_BLAS_SRC)/java/LUDecomposition.java $(JNI_BLAS_SRC)/java/CholeskyDecomposition.java $(JNI_BLAS_SRC)/java/EigenvalueDecomposition.java $(JNI_BLAS_SRC)/java/QRDecomposition.java $(JNI_BLAS_SRC)/java/SingularValueDecomposition.java 
 PACKAGE = ../class/JGSL
 
-all: $(PACKAGE) $(DYLIB_BLAS)
+all: $(PACKAGE) $(OBJ_BLAS) $(OBJ_LU) $(OBJ_CHOL) $(OBJ_EIG) $(OBJ_QR) $(OBJ_SVD)
 
 $(PACKAGE): $(JAVA_SRC)
 	@mkdir -p $(@D)
 	$(JC) $(JFLAGS) ../class $(JAVA_SRC)
 	
-$(DYLIB_BLAS): $(C_SRC_BLAS) 
+$(OBJ_BLAS): $(C_SRC_BLAS) 
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_BLAS) -lgsl -lgslcblas -lm -o $(DYLIB_BLAS)
+	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_BLAS) -lgsl -lgslcblas -lm -o $(OBJ_BLAS)
+
+$(OBJ_LU): $(C_SRC_LU) 
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_LU) -lgsl -lgslcblas -lm -o $(OBJ_LU)
+
+$(OBJ_CHOL): $(C_SRC_CHOL) 
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_CHOL) -lgsl -lgslcblas -lm -o $(OBJ_CHOL)
+
+$(OBJ_EIG): $(C_SRC_EIG) 
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_EIG) -lgsl -lgslcblas -lm -o $(OBJ_EIG)
+
+$(OBJ_QR): $(C_SRC_QR) 
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_QR) -lgsl -lgslcblas -lm -o $(OBJ_QR)
+
+$(OBJ_SVD): $(C_SRC_SVD) 
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_SVD) -lgsl -lgslcblas -lm -o $(OBJ_SVD)
+
+$(OBJ_RNG): $(C_SRC_RNG)
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_RNG) -lgsl -lgslcblas -lm -o $(OBJ_RNG)
 
 clean: 
 	rm -fr ../class

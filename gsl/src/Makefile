@@ -2,7 +2,7 @@ DEST = .
 CC = gcc
 CFLAGS = $(INCLUDE) $(LIB) 
 
-JNI_BLAS_SRC = jni_blas
+JNI_BLAS_SRC = .
 
 INCLUDE = -I../../include -I/usr/include/gsl
 
@@ -14,12 +14,14 @@ C_SRC_CHOL = $(JNI_BLAS_SRC)/c/CholeskyDecomposition.c
 C_SRC_EIG = $(JNI_BLAS_SRC)/c/EigenvalueDecomposition.c
 C_SRC_QR = $(JNI_BLAS_SRC)/c/QRDecomposition.c
 C_SRC_SVD = $(JNI_BLAS_SRC)/c/SingularValueDecomposition.c
+C_SRC_RNG = $(JNI_BLAS_SRC)/c/JniGslRng.c
 DYLIB_BLAS = ../lib/libgsl_blas.dylib
 DYLIB_LU = ../lib/libgsl_lu.dylib
 DYLIB_CHOL = ../lib/libgsl_chol.dylib
 DYLIB_EIG = ../lib/libgsl_eig.dylib
 DYLIB_QR = ../lib/libgsl_qr.dylib
 DYLIB_SVD = ../lib/libgsl_svd.dylib
+DYLIB_RNG = ../lib/libgsl_random.dylib
 
 JC = javac
 JFLAGS = -d
@@ -56,6 +58,10 @@ $(DYLIB_QR): $(C_SRC_QR)
 $(DYLIB_SVD): $(C_SRC_SVD) 
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_SVD) -lgsl -lgslcblas -lm -o $(DYLIB_SVD)
+
+$(DYLIB_RNG): $(C_SRC_RNG)
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_RNG) -lgsl -lgslcblas -lm -o $(DYLIB_RNG)
 
 clean: 
 	rm -fr ../class

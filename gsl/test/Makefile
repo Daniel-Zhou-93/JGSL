@@ -14,8 +14,10 @@ SVD_CLASS = JGSLExamplesSVD.class
 SVD_RUN = JGSL_examples_SVD_result.txt
 RNG_CLASS = GslRngtest.class
 RNG_RUN = GslRng_examples_result.txt
+BAYES_CLASS = BayesTest.class
+BAYES_RUN = Bayes_examples_result.txt
 
-all: $(EXAMPLE_CLASS) $(EXAMPLE_RUN) $(LU_CLASS) $(LU_RUN) $(CHOL_CLASS) $(CHOL_RUN) $(EIG_CLASS) $(EIG_RUN) $(QR_CLASS) $(QR_RUN) $(SVD_CLASS) $(SVD_RUN) $(RNG_CLASS) $(RNG_RUN)
+all: $(EXAMPLE_CLASS) $(EXAMPLE_RUN) $(LU_CLASS) $(LU_RUN) $(CHOL_CLASS) $(CHOL_RUN) $(EIG_CLASS) $(EIG_RUN) $(QR_CLASS) $(QR_RUN) $(SVD_CLASS) $(SVD_RUN) $(RNG_CLASS) $(RNG_RUN) $(BAYES_CLASS) $(BAYES_RUN)
 
 $(EXAMPLE_CLASS):
 	javac -classpath $(JAVA_HOME)/class:. JGSLExamples.java 
@@ -58,6 +60,12 @@ $(RNG_CLASS):
 
 $(RNG_RUN):
 	java -Djava.library.path=$(JAVA_HOME)/lib -classpath $(JAVA_HOME)/class:. GslRngtest > GslRng_examples_result.txt
+
+$(BAYES_CLASS):
+	javac -classpath $(JAVA_HOME)/class:. BayesTest.java
+
+$(BAYES_RUN):
+	java -Djava.library.path=$(JAVA_HOME)/lib -classpath $(JAVA_HOME)/class:. BayesTest > Bayes_examples_result.txt
 
 clean: 
 	rm -f *.txt *.class *.out *.serial

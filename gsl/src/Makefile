@@ -26,10 +26,10 @@ OBJ_RNG = ../lib/libgsl_random.so
 JC = javac
 JFLAGS = -d
 #TODO: update with other package specifications. Don't forget to rename the files in the java to point to the new OBJ specifications
-JAVA_SRC = $(JNI_BLAS_SRC)/java/Matrix.java $(JNI_BLAS_SRC)/java/LUDecomposition.java $(JNI_BLAS_SRC)/java/CholeskyDecomposition.java $(JNI_BLAS_SRC)/java/EigenvalueDecomposition.java $(JNI_BLAS_SRC)/java/QRDecomposition.java $(JNI_BLAS_SRC)/java/SingularValueDecomposition.java 
+JAVA_SRC = $(JNI_BLAS_SRC)/java/Matrix.java $(JNI_BLAS_SRC)/java/LUDecomposition.java $(JNI_BLAS_SRC)/java/CholeskyDecomposition.java $(JNI_BLAS_SRC)/java/EigenvalueDecomposition.java $(JNI_BLAS_SRC)/java/QRDecomposition.java $(JNI_BLAS_SRC)/java/SingularValueDecomposition.java $(JNI_BLAS_SRC)/java/JniGslRng.java $(JNI_BLAS_SRC)/java/BayesNIG.java $(JNI_BLAS_SRC)/java/BayesNIW.java
 PACKAGE = ../class/JGSL
 
-all: $(PACKAGE) $(OBJ_BLAS) $(OBJ_LU) $(OBJ_CHOL) $(OBJ_EIG) $(OBJ_QR) $(OBJ_SVD)
+all: $(PACKAGE) $(OBJ_BLAS) $(OBJ_LU) $(OBJ_CHOL) $(OBJ_EIG) $(OBJ_QR) $(OBJ_SVD) $(OBJ_RNG)
 
 $(PACKAGE): $(JAVA_SRC)
 	@mkdir -p $(@D)
@@ -58,6 +58,10 @@ $(OBJ_QR): $(C_SRC_QR)
 $(OBJ_SVD): $(C_SRC_SVD) 
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_SVD) -lgsl -lgslcblas -lm -o $(OBJ_SVD)
+
+$(OBJ_RNG): $(C_SRC_RNG)
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_RNG) -lgsl -lgslcblas -lm -o $(OBJ_RNG)
 
 $(OBJ_RNG): $(C_SRC_RNG)
 	@mkdir -p $(@D)

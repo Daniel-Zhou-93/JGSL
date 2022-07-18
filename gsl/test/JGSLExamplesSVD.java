@@ -12,7 +12,7 @@ public final class JGSLExamplesSVD {
         //
         // Prepare the matrices and other parameters
         //
-		System.out.println("###   Testfile for jni_lapack   ### \n \n");
+		System.out.println("###   Testfile for jgsl   ### \n \n");
 		System.out.println("###   Parameter Preparation   ###");
 		int M=3, N=3, K=3;
 		double[] A = new double[] {12, -51, 4, 6, 167, -68, -4, 24, -41};

@@ -33,7 +33,8 @@ public class BayesNIW implements java.io.Serializable{
     * ------------------------ */
     public static Matrix getSigmaResult(int q, double n, Matrix Phi){
 	//Phis = Phis.inverse();
-	double[] PhiArr = Phi.getRowPackedCopy();
+        CholeskyDecomposition CholPhi = new CholeskyDecomposition(Phi); 
+	double[] PhiArr = CholPhi.getL().getRowPackedCopy();
 	double[] result = new double[q * q];
 	JniGslRng.inverwishart(n,q,PhiArr,result);
 	Matrix Result = new Matrix(result,q,q);

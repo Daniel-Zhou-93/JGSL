@@ -31,7 +31,7 @@ public final class BayesTest {
 
         // TODO: Test NIW
         int q = 4;
-	double[][] PhivPrior = {{27, 8.0, 14.0, -2.0},{8.0, 13.0, 7.0, 16.0},{14.0,7.0,24.0, 5.0},{-2.0, 16.0, 5.0, 30.0}};
+	double[][] PhivPrior = {{10.3838, 1.06197, -2.65679, -2.84745},{1.06197, 8.84605, 0.122342, 0.746835},{-2.65679,0.122342, 3.77193, -2.28483},{-2.84745, 0.746835, -2.28483, 10.571}};
 	Matrix Phiv = 	new Matrix(PhivPrior);//phi q*q
         double n = 7;
         Matrix Sigma = new Matrix(q, q);
@@ -43,7 +43,21 @@ public final class BayesTest {
         printMatrix(matrix_layout, Phiv.getArray(), Phiv.getRowDimension(), Phiv.getColumnDimension());
         System.out.println("Sigma:");
         printMatrix(matrix_layout, Sigma.getArray(), Sigma.getRowDimension(), Sigma.getColumnDimension());
+
+        // subtract Sigma from its symmetric view
+        System.out.println("Internal Debug: Get difference with symmetric matrix.");
+        double[][] symmSigma = Sigma.getArrayCopy();
+        for (int i = 0; i < q; i++) {
+            for (int j = i + 1; j < q; j++) symmSigma[j][i] = symmSigma[i][j];
+        }
         
+        Matrix symmSigmaMat = new Matrix(symmSigma);
+        Matrix deltaSigma = Sigma.minus(symmSigmaMat);
+        printMatrix(matrix_layout, deltaSigma.getArray(), Sigma.getRowDimension(), Sigma.getColumnDimension());
+        System.out.println("Symmetric difference is small. Set Sigma to its symmetry.");
+        
+        Sigma = symmSigmaMat;
+        //TODO: error. Sigma is ill-conditioned so it's not considered to be PD. How to solve this???
         mu_out = BayesNIW.getMuResult(q, muv, lambda, Sigma);
         printDoubleArray("Actual Mu:", muv, q);
         printDoubleArray("Sampled Mu:", mu_out, q);

@@ -29,7 +29,7 @@ public final class BayesTest {
         System.out.printf("Sample 2: mu %.2f, sigma2 %.2f\n", mu_sigma2_x3[1][0], mu_sigma2_x3[1][1]);
         System.out.printf("Sample 3: mu %.2f, sigma2 %.2f\n", mu_sigma2_x3[2][0], mu_sigma2_x3[2][1]);
 
-        // TODO: Test NIW
+        // Test NIW
         int q = 4;
 	double[][] PhivPrior = {{10.3838, 1.06197, -2.65679, -2.84745},{1.06197, 8.84605, 0.122342, 0.746835},{-2.65679,0.122342, 3.77193, -2.28483},{-2.84745, 0.746835, -2.28483, 10.571}};
 	Matrix Phiv = 	new Matrix(PhivPrior);//phi q*q
@@ -57,10 +57,24 @@ public final class BayesTest {
         System.out.println("Symmetric difference is small. Set Sigma to its symmetry.");
         
         Sigma = symmSigmaMat;
-        //TODO: error. Sigma is ill-conditioned so it's not considered to be PD. How to solve this???
         mu_out = BayesNIW.getMuResult(q, muv, lambda, Sigma);
         printDoubleArray("Actual Mu:", muv, q);
         printDoubleArray("Sampled Mu:", mu_out, q);
+        
+        // get a pds matrix to simulate sampling from a multivariate normal.
+        
+        Matrix V = new Matrix((int)n, (int)n);
+        String vfilename = "../data/V.txt";
+        File vfile = new File(vfilename);
+        fileinput vfi = new fileinput();
+        vfi.readmatrix(vfile, V);
+        
+        double[][] Mu_array = {{1,0,1,2},{2,0,2,3},{3,0,3,5},{5,2,5,9},{8,17,7,-8},{13,20,4,9},{21, 8, 3, -4}};
+        Matrix Mu_s = new Matrix(Mu_array);
+        Matrix Mu_out = new Matrix((int)n, q);
+        Mu_out = BayesNIW.getMatrixMuResult((int)n, q, Mu_s, Sigma, V);
+        System.out.println("Sample 4 x 7 matrix Mu, drawn from a multivariate normal.");
+        printMatrix(matrix_layout, Mu_out.getArray(), Mu_out.getRowDimension(), Mu_out.getColumnDimension());
         
 	JniGslRng.free();
         

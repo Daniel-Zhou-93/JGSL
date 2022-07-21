@@ -26,7 +26,7 @@ DYLIB_RNG = ../lib/libgsl_random.dylib
 JC = javac
 JFLAGS = -d
 #TODO: update with other package specifications. Don't forget to rename the files in the java to point to the new DYLIB specifications
-JAVA_SRC = $(JNI_BLAS_SRC)/java/Matrix.java $(JNI_BLAS_SRC)/java/LUDecomposition.java $(JNI_BLAS_SRC)/java/CholeskyDecomposition.java $(JNI_BLAS_SRC)/java/EigenvalueDecomposition.java $(JNI_BLAS_SRC)/java/QRDecomposition.java $(JNI_BLAS_SRC)/java/SingularValueDecomposition.java $(JNI_BLAS_SRC)/java/JniGslRng.java $(JNI_BLAS_SRC)/java/BayesNIG.java $(JNI_BLAS_SRC)/java/BayesNIW.java
+JAVA_SRC = $(JNI_BLAS_SRC)/java/Matrix.java $(JNI_BLAS_SRC)/java/LUDecomposition.java $(JNI_BLAS_SRC)/java/CholeskyDecomposition.java $(JNI_BLAS_SRC)/java/EigenvalueDecomposition.java $(JNI_BLAS_SRC)/java/QRDecomposition.java $(JNI_BLAS_SRC)/java/SingularValueDecomposition.java $(JNI_BLAS_SRC)/java/JniGslRng.java $(JNI_BLAS_SRC)/java/BayesNIG.java $(JNI_BLAS_SRC)/java/BayesNIW.java $(JNI_BLAS_SRC)/java/fileinput.java
 PACKAGE = ../class/JGSL
 
 all: $(PACKAGE) $(DYLIB_BLAS) $(DYLIB_LU) $(DYLIB_CHOL) $(DYLIB_EIG) $(DYLIB_QR) $(DYLIB_SVD) $(DYLIB_RNG) $(DYLIB_BNIG) $(DYLIB_BNIW)

@@ -4,7 +4,7 @@
  * Created on July 2, 2002, 8:09 PM
  */
 
-package BayesMNIWConjugate;
+package JGSL;
 
 /**
  *
@@ -13,7 +13,7 @@ package BayesMNIWConjugate;
  */
 
 import java.io.*;
-import JAMAJniGsl.*;
+import JGSL.*;
 import java.util.StringTokenizer;
 
 public class fileinput {

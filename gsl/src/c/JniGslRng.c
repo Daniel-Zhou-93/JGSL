@@ -102,6 +102,8 @@ JNIEXPORT jdouble JNICALL Java_JGSL_JniGslRng_invergamma
         return result;
 }
 
+//NOTE: Pass in the lower triangular of the scale matrix for the Wishart, and the lower triangular for the inverse of the matrix
+//      for the inverse Wishart to achieve the desired behavior.
 
 JNIEXPORT void JNICALL Java_JGSL_JniGslRng_wishart
   (JNIEnv *env, jclass obj, jdouble n, jint p, jdoubleArray jl, jdoubleArray jresult)

@@ -81,9 +81,17 @@ public class BayesNIW implements java.io.Serializable{
     * ------------------------ */
     public static Matrix getSigmaResult(int q, double n, Matrix Phi){
 	//Phis = Phis.inverse();
-        CholeskyDecomposition CholPhi = new CholeskyDecomposition(Phi); 
-	double[] PhiArr = CholPhi.getL().getRowPackedCopy();
+	int info = 0;
+	double[] PhiinvArr = Phi.getRowPackedCopy();
+	CholeskyDecomposition.dcomp(q, PhiinvArr, info);
+	CholeskyDecomposition.invert(q, PhiinvArr);
+	CholeskyDecomposition CholPhiinv = new CholeskyDecomposition(new Matrix(PhiinvArr, q, q));
+//        CholeskyDecomposition CholPhi = new CholeskyDecomposition(Phi); 
+	// NOTE: In order to compute the inverse Wishart properly, the inverse Wishart must be sampled using the inverse.
+	// Alternatively, just sample from a normal Wishart and invert it once instead of having to invert a matrix twice?
+	double[] PhiArr = CholPhiinv.getL().getRowPackedCopy();
 	double[] result = new double[q * q];
+	// pass in L of Phi-inverse due to how the inverse Wishart works in C.
 	JniGslRng.inverwishart(n,q,PhiArr,result);
 	Matrix Result = new Matrix(result,q,q);
 	//Result = Result.inverse();

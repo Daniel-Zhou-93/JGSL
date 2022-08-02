@@ -63,10 +63,6 @@ $(OBJ_RNG): $(C_SRC_RNG)
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_RNG) -lgsl -lgslcblas -lm -o $(OBJ_RNG)
 
-$(OBJ_RNG): $(C_SRC_RNG)
-	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -shared -fPIC $(C_SRC_RNG) -lgsl -lgslcblas -lm -o $(OBJ_RNG)
-
 clean: 
 	rm -fr ../class
 	rm -fr ../lib

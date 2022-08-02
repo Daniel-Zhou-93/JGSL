@@ -30,6 +30,8 @@ public static native double	invergamma(double a, double b);
 
 	/* wishart Distribution */
 
+//NOTE: Pass in the lower triangular of the scale matrix for the Wishart, and the lower triangular for the inverse of the matrix
+//      for the inverse Wishart to achieve the desired behavior.
 public static native void	wishart(double n, int p, double[] l, double[] reulst);
 public static native void	inverwishart(double n, int p, double[] l, double[] result);
 

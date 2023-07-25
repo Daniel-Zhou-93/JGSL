@@ -75,7 +75,7 @@ public final class JGSLExamplesLU {
         System.out.println();
 
 	System.out.printf("The determinant of A: %.3f\n", LUDecomposition.det(n, a, signum));
-	System.out.printf("The log-determinant of A: %.3f\n", LUDecomposition.lndet(n, a));
+	System.out.printf("The log-absolute value of the determinant of A: %.3f\n", LUDecomposition.lndet(n, a));
 
         D = B.clone();
         D2 = A.clone();

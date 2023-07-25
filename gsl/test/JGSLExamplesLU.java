@@ -73,6 +73,10 @@ public final class JGSLExamplesLU {
         /* dslve */
         //
         System.out.println();
+
+	System.out.printf("The determinant of A: %.3f\n", LUDecomposition.det(n, a, signum));
+	System.out.printf("The log-determinant of A: %.3f\n", LUDecomposition.lndet(n, a));
+
         D = B.clone();
         D2 = A.clone();
         a = D;
@@ -90,144 +94,6 @@ public final class JGSLExamplesLU {
         LUDecomposition.slve( n, a, b, p, x);
         printMatrix("  The solution  matrix of BX=[12,6,4] by LU is:", matrix_layout, x, n, 1);
         
-
-
-
-//        /* ---- Cholesky ---- */
-//        //
-//        System.out.println("\n \n");
-//        System.out.println("###   Cholesky   ###");
-//        //
-//        /* dcomp */
-//        //
-//        System.out.println();
-//        D = B.clone();
-//        n = M;//n = order of matrix a
-//        a = D;//a is symmetric matrix
-//        CholeskyDecomposition.dcomp( n, a, info);
-//        printMatrix("  The Cholesky factorization of matrix B is :", matrix_layout, a, n, n);
-//        
-//        //
-//        /*  dslve */
-//        //
-//        System.out.println();
-//        D = B.clone();
-//        D2 = A.clone();
-//
-//        n = M;//n = order of matrix a
-//        a = D;//a is symmetric matrix
-//        CholeskyDecomposition.dcomp( n, a, info);
-//        CholeskyDecomposition.slve(n, a, b, x);
-//        printMatrix("  The solution  matrix of BX=A by Cholesky is :", matrix_layout, x, n, 1);
-//        //
-//
-//
-//        //
-//        /* ---- QR ---- */
-//        //
-//        System.out.println("\n \n");
-//        System.out.println("###   QR decomposition   ###");
-//        //
-//        /* dcomp */
-//        //
-//        System.out.println();
-//        System.out.println("A=QR:");
-//        D = A.clone();
-//
-//        m = M;//m = number of rows of matrix a
-//        n = N;//n = number of columns of matrix a
-//        a = D;//a double precision, dimension(m,n)
-//        int l = Math.min( m, n);
-//        //tau = scalar factors of the elementary reflectors
-//        QRDecomposition.dcomp( m, n, l, a, tau);
-//        printMatrix("  The rewritten matrix A is :", matrix_layout, a, m, n);
-//        //
-//        /* unpack */
-//        //
-//        System.out.println();
-//        m = M;//m = number of rows of matrix q
-//        n = N;//n = number of columns of matrix q
-//        //int k = M;//k = number of elementary reflectors whose product defines the matrix q
-//        //a = D;//a is returned by dgeqrf
-//        //lda = M;//lda = leading dimension of a
-//        //tau is returned by dgeqrf
-//        double [] q = new double [m*m];
-//        QRDecomposition.unpack( m, n, l, a, tau, q);
-//        printMatrix("  The matrix Q is :", matrix_layout, q, m, m);
-//
-//        //
-//        //
-//        /*  dslve */
-//        //
-//        System.out.println();
-//        a = B.clone();
-//        QRDecomposition.dcomp( m, n, l, a, tau);
-//        QRDecomposition.slve( m, n, l, a, tau, b, x);
-//        printMatrix("  The solution  matrix of BX=A by QW is :", matrix_layout, x, n, 1);
-//        //
-//
-//
-//        /* ---- Eigenvector ---- */
-//        //
-//        System.out.println("\n \n");
-//        System.out.println("###   Eigenvector   ###");
-//        //
-//        /* nonsymmv */
-//        //
-//        System.out.println(" \nGet Eigenvectors of A:");
-//        D = A.clone();
-//
-//        n = N;//n = order of matrix a
-//        a = D;//a double precision
-//
-//        double[] wr = WR;//wr = real part of eigenvalues
-//        double[] wi = WI;//wi = image part of eigenvalues
-//        double[] vI = VL;//vl = image eigenvectors
-//
-//        double[] vR = VR;//vr = real eigenvectors
-//
-//        EigenvalueDecomposition.nonsymmv(n, a, wr, wi, vR, vI);
-//
-//        printMatrix("  The overwritten matrix A :", matrix_layout, a, n, n);
-//        printMatrix("\n  image eigenvectors (in columns) :", matrix_layout, vI, n, n);
-//        printMatrix("\n  real eigenvectors (in columns):", matrix_layout, vR, n, n);
-//        //
-//
-//
-//
-//        //
-//        /* ---- SVD ---- */
-//        //
-//        System.out.println("\n \n");
-//        System.out.println("###   SVD   ###");
-//        //
-//        /* dcomp */
-//        //
-//        System.out.println();
-//        System.out.println(" \nSVD of A: A = U * SIGMA * transpose(V):");
-//        D = A.clone();
-//
-//        m = M;//m = number of rows of input matrix a
-//        n = N;//n = number of columns of input matrix a
-//        a = D;//a double precision
-//
-//        double[] s = S;//s = singular values of a
-//        double[] u = U;//u = U
-//        double[] v = new double[n*n];
-//
-//        SingularValueDecomposition.dcomp(m, n, l, a, v, s);
-//
-//        printMatrix("  The overwritten matrix A :", matrix_layout, a, m, n);
-//        printMatrix("\n  The singular values of A :", matrix_layout, s, 1, m);
-//        printMatrix("\n  Left singular vectors (in columns) :", matrix_layout, a, m, m);
-//        printMatrix("\n  Right singular vectors (in rows):", matrix_layout, v, n, n);
-//        //
-//        /* dslve */
-//        System.out.println();
-//        a = B.clone();
-//        SingularValueDecomposition.dcomp( m, n, l, a, v, s);
-//        SingularValueDecomposition.slve( m, n, l, a, v, s, b, x);
-//        printMatrix("  The solution  matrix of BX=A by SVD is :", matrix_layout, x, n, 1);
 }
 
 

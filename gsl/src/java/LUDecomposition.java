@@ -140,15 +140,16 @@ public class LUDecomposition implements java.io.Serializable {
             throw new IllegalArgumentException("Matrix must be square.");
         }
         
-        double d = (double) 1.0;
-        int temp = 0;
-        
-        for (int j = 0; j < n; j++){
-            d *= LU[j * n + j];
-        }
-        return (d * signum);
+	return(det(n, LU, signum));
     }
     
+    public double lndet( ) {
+        if (m != n) {
+            throw new IllegalArgumentException("Matrix must be square.");
+        }
+        
+	return(lndet(n, LU));
+    }
     
     /** Solve A * X = B */
     public Matrix solve (Matrix B) {
@@ -200,6 +201,10 @@ public class LUDecomposition implements java.io.Serializable {
     public static native int decomp( int n, double[] a, long[] p, int signum);
     
     public static native int slve( int n, double[] a, double[] b, long[] p, double[] x);
+
+    public static native double det(int n, double[] a, int signum);
+
+    public static native double lndet(int n, double[] a);
 
     public static native int invert( int n, double[] a, double[] b, long[] p);
     

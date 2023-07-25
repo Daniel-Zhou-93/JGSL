@@ -32,6 +32,36 @@ JNIEXPORT int JNICALL Java_JGSL_LUDecomposition_decomp
     return signum;
 }
 
+JNIEXPORT jdouble JNICALL Java_JGSL_LUDecomposition_det
+  (JNIEnv *env, jclass obj, jint n, jdoubleArray ja, jint signum)
+{
+    double *aElems = (*env)-> GetDoubleArrayElements (env, ja, NULL);
+    double det;
+
+    gsl_matrix_view tempa=gsl_matrix_view_array(aElems, n, n);
+
+    det = gsl_linalg_LU_det(&tempa.matrix, signum);
+    
+    //gsl_permutation_free (p);
+//    (*env)-> ReleaseDoubleArrayElements (env, ja, aElems, 0);
+    return det;
+}
+
+JNIEXPORT jdouble JNICALL Java_JGSL_LUDecomposition_lndet
+  (JNIEnv *env, jclass obj, jint n, jdoubleArray ja)
+{
+    double *aElems = (*env)-> GetDoubleArrayElements (env, ja, NULL);
+    double lndet;
+
+    gsl_matrix_view tempa=gsl_matrix_view_array(aElems, n, n);
+
+    lndet = gsl_linalg_LU_lndet(&tempa.matrix);
+    
+    //gsl_permutation_free (p);
+//    (*env)-> ReleaseDoubleArrayElements (env, ja, aElems, 0);
+    return lndet;
+}
+
 JNIEXPORT void JNICALL Java_JGSL_LUDecomposition_slve
   (JNIEnv *env, jclass obj, jint n, jdoubleArray ja, jdoubleArray jb, 
    jlongArray jp, jdoubleArray jx)
